@@ -1,3 +1,5 @@
+
+
 ## 1. 基本配置
 
 1. 设置用户信息
@@ -86,3 +88,14 @@ alias ll='ls -al'
    * ~~~
      git pull origin master
      ~~~
+
+## 3.解决nodejs不能访问数据库的问题
+
+~~~sql
+show databases ;
+create database hkzf;
+select user, plugin from mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+FLUSH PRIVILEGES;
+~~~
+

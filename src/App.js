@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Button } from "antd-mobile";
+// 导入路由
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+
+// 导入首页和城市选择组件
+import Home from "./pages/Home";
+import CityList from "./pages/CityList";
+import News from "./pages/News";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Button>登录</Button>
+      </div>
+      {/* 路由 */}
+      <Link to="/home">首页</Link>
+      <hr />
+      <Link to="/citylist">城市选择</Link>
+      <Routes>
+        <Route path="/home" element={<Home />}>
+          <Route path="news" element={<News />} />
+        </Route>
+        <Route path="/citylist" element={<CityList />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
