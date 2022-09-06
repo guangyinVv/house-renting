@@ -80,3 +80,9 @@ alias ll='ls -al'
         ~~~
 
    6. git push 即可
+
+6. 首次连接远端仓库
+
+   * ~~~
+     git pull origin master
+     ~~~
