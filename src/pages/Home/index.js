@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet,Link } from "react-router-dom";
 import { Badge, TabBar } from "antd-mobile";
 import {
   AppOutline,
@@ -35,10 +35,23 @@ class Home extends React.Component {
         icon: <UserOutline />,
       },
     ],
-    activeKey: "findHouse",
+    key:'home'
   };
+  activeKey = ()=>{
+    var url = window.location.href;
+    var index = url.lastIndexOf("/");
+    var str = url.substring(index + 1,url.length);
+    return str
+  }
   setRouteActive = (key) => {
-    window.location.replace(`/home/${key}`);
+    this.setState({
+      key:key
+    },
+    ()=>{
+      const link = document.querySelector('.link');
+      link.click()
+    }
+    )
   };
   render() {
     return (
@@ -52,13 +65,14 @@ class Home extends React.Component {
           }}
         >
           <TabBar
-            defaultActiveKey={this.state.activeKey}
+            defaultActiveKey={this.activeKey()}
             onChange={this.setRouteActive}
           >
             {this.state.tabs.map((item) => (
               <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
             ))}
           </TabBar>
+          <Link className="link" style={{display:'none'}} to={`/home/${this.state.key}`}>consult</Link>
         </div>
       </div>
     );

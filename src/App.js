@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import CityList from "./pages/CityList";
 import News from "./pages/News";
 
+import Test from "./component/test";
+
 function App() {
   return (
     <Router>
@@ -20,7 +22,10 @@ function App() {
       <Link to="/citylist">城市选择</Link>
       <Routes>
         <Route path="/home" element={<Home />}>
-          <Route path="news" element={<News />} />
+          <Route path="home" element={<News />} />
+          <Route path="findHouse" element={<Test />} />
+          <Route path="consult" element={<News />} />
+          <Route path="personalCenter" element={<News />} />
         </Route>
         <Route path="/citylist" element={<CityList />}></Route>
       </Routes>
