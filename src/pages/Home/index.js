@@ -37,11 +37,11 @@ class Home extends React.Component {
     ],
     key:'home'
   };
-  activeKey = ()=>{
+  getDefaultActiveKey = ()=>{
     var url = window.location.href;
     var index = url.lastIndexOf("/");
     var str = url.substring(index + 1,url.length);
-    return str
+    return str===''?'home':str
   }
   setRouteActive = (key) => {
     this.setState({
@@ -65,7 +65,7 @@ class Home extends React.Component {
           }}
         >
           <TabBar
-            defaultActiveKey={this.activeKey()}
+            defaultActiveKey={this.getDefaultActiveKey()}
             onChange={this.setRouteActive}
           >
             {this.state.tabs.map((item) => (

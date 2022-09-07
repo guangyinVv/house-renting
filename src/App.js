@@ -1,14 +1,16 @@
 import React from "react";
 import { Button } from "antd-mobile";
 // 导入路由
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link,Navigate } from "react-router-dom";
 
 // 导入首页和城市选择组件
 import Home from "./pages/Home";
 import CityList from "./pages/CityList";
-import News from "./pages/News";
 
-import Test from "./component/test";
+import Smallhome from "./component/mainPage/home";
+import Consult from "./component/mainPage/consult";
+import PersonalCenter from "./component/mainPage/personalCenter";
+import FindHouse from "./component/mainPage/findHouse";
 
 function App() {
   return (
@@ -22,10 +24,11 @@ function App() {
       <Link to="/citylist">城市选择</Link>
       <Routes>
         <Route path="/home" element={<Home />}>
-          <Route path="home" element={<News />} />
-          <Route path="findHouse" element={<Test />} />
-          <Route path="consult" element={<News />} />
-          <Route path="personalCenter" element={<News />} />
+          <Route path="home" element={<Smallhome />} />
+          <Route path="findHouse" element={<FindHouse />} />
+          <Route path="consult" element={<Consult />} />
+          <Route path="personalCenter" element={<PersonalCenter />} />
+          <Route path="" element={<Navigate to="../home" />}></Route>
         </Route>
         <Route path="/citylist" element={<CityList />}></Route>
       </Routes>
