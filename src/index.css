@@ -9,6 +9,14 @@ html,body{
   margin:0;
 }
 *{
+  margin:0;
+  border:0;
+  padding:0;
   box-sizing: border-box;
+}
+
+/* 给底部navbar设置背景颜色 */
+.adm-tab-bar-wrap{
+  background-color: #fff;
 }
 
