@@ -76,7 +76,6 @@
     img {
       width: 135px;
       height: 90px;
-      background-color: red;
       margin-right: 10px;
     }
     .title {
@@ -93,4 +92,42 @@
     }
   }
   padding-bottom: 50px;
+}
+.smallhome-search {
+  line-height: 30px;
+  display: flex;
+  position: absolute;
+  z-index: 1;
+  .position {
+    background-color: rgb(245, 245, 245);
+    display: flex;
+    position: relative;
+  }
+  .position::after {
+    background-color: rgb(245, 245, 245);
+    display: block;
+    content: "";
+    box-sizing: content-box;
+    width: 0px;
+    height: 0px;
+    border-top: black solid 5px !important;
+    border-bottom: transparent solid 5px !important;
+    border-right: transparent solid 5px !important;
+    border-left: transparent solid 5px !important;
+    position: relative;
+    top: 12px;
+    left: 3px;
+  }
+  .search {
+    // background-color: rgb(245, 245, 245);
+    display: flex;
+    .searchBar {
+      border-left: solid 1px red;
+    }
+  }
+  .choosePosition {
+    margin-left: 5px;
+    color: white;
+    font-size: 20px;
+  }
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import MySwiper from "./swiper";
 import "../../../index.scss";
+import { SearchBar } from "antd-mobile";
+import { EnvironmentOutline } from "antd-mobile-icons";
 
 import nav1 from "../../../assets/nav-1.png";
 import nav2 from "../../../assets/nav-2.png";
@@ -77,6 +79,17 @@ export default class Smallhome extends React.Component {
   render() {
     return (
       <div>
+        <div class="smallhome-search">
+          <div className="search">
+            <div class="position">上海</div>
+            <div className="searchBar">
+              <SearchBar></SearchBar>
+            </div>
+          </div>
+          <div className="choosePosition">
+            <EnvironmentOutline />
+          </div>
+        </div>
         <MySwiper />
         <div className="smallhome-tabbar">{this.getTabbar()}</div>
         <div className="smallhome-rentGroups">
@@ -90,16 +103,6 @@ export default class Smallhome extends React.Component {
           <div className="smallhome-news">
             <h3>最新资讯</h3>
             {this.renderNews()}
-            {/* <div className="item">
-              <img src="" alt=""></img>
-              <div className="content">
-                <h4 className="title">
-                  置业选择 | 安贞西里 三室一厅 河间的古雅别院
-                </h4>
-                <div className="from">新华网</div>
-                <div className="date">两天前</div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
