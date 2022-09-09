@@ -94,14 +94,26 @@
   padding-bottom: 50px;
 }
 .smallhome-search {
+  top: 25px;
   line-height: 30px;
   display: flex;
   position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  // transform: translate(30px, 0);
   z-index: 1;
   .position {
+    width: 55px;
     background-color: rgb(245, 245, 245);
     display: flex;
     position: relative;
+  }
+  .positionBox {
+    padding-left: 5px;
+    width: 60px;
+    background-color: white;
+    height: 32px;
+    border-radius: 5px;
   }
   .position::after {
     background-color: rgb(245, 245, 245);
@@ -119,14 +131,17 @@
     left: 3px;
   }
   .search {
-    // background-color: rgb(245, 245, 245);
+    position: relative;
     display: flex;
     .searchBar {
-      border-left: solid 1px red;
+      width: 232px;
+      transform: translate(-10px, 0);
+      border-left: solid 1px rgb(167, 167, 167);
     }
   }
   .choosePosition {
-    margin-left: 5px;
+    // padding-right: 15px;
+    // margin-left: 5px;
     color: white;
     font-size: 20px;
   }

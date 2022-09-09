@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Test extends React.Component {
+export default class Map extends React.Component {
   state = {
     city: "",
   };

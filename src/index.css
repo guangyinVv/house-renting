@@ -8,6 +8,10 @@ html,body{
   background-color: #fff;
   margin:0;
 }
+html,body,#root,.App{
+  height: 100%;
+  width: 100%;
+}
 *{
   margin:0;
   border:0;
@@ -20,5 +24,8 @@ html,body{
   background-color: #fff;
 }
 
-
+/* 给navbar顶部导航栏加背景颜色 */
+.adm-nav-bar{
+  background-color: #f6f5f6;
+}
 
