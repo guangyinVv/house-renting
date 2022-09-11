@@ -19,6 +19,10 @@ html,body,#root,.App{
   box-sizing: border-box;
 }
 
+ul,li{
+  list-style: none;
+}
+
 /* 给底部navbar设置背景颜色 */
 .adm-tab-bar-wrap{
   background-color: #fff;

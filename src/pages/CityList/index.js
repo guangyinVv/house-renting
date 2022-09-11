@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavBar } from 'antd-mobile'
+import { NavBar, Toast } from 'antd-mobile'
 import { getCurrentCity } from '../../utils/index'
 import { List, AutoSizer } from 'react-virtualized'
 import 'react-virtualized/styles.css'
@@ -14,6 +14,9 @@ const formatCityIndex = (letter) => {
       return letter.toUpperCase(letter)
   }
 }
+
+// 当前有数据的城市
+const HOUSE_CITY = ['北京', '上海', '广州', '深圳']
 
 const formatCityData = (list) => {
   let cityList = {}
@@ -35,12 +38,14 @@ const formatCityData = (list) => {
 }
 
 export default class CityList extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       cityList: [],
       cityIndex: [],
+      index: 0,
     }
+    this.cityListComponent = React.createRef()
     this.getCityList()
   }
 
@@ -59,12 +64,32 @@ export default class CityList extends React.Component {
       <div key={key} style={style}>
         <div className="cityIndex">{formatCityIndex(letter)}</div>
         {cityList[letter].map((item, index) => (
-          <div key={item.value} className="cityName">
+          <div
+            key={item.value}
+            className="cityName"
+            onClick={() => {
+              this.changeCity(item)
+            }}
+          >
             {item.label}
           </div>
         ))}
       </div>
     )
+  }
+
+  // 封装函数，渲染索引
+  formatRightCityIndex = (input) => {
+    return input === 'hot' ? '热' : input.toUpperCase()
+  }
+
+  onRowsRendered = ({ startIndex }) => {
+    if (startIndex !== this.state.index) {
+      this.setState({
+        index: startIndex,
+      })
+    }
+    // console.log(startIndex)
   }
 
   // 得到城市列表数据
@@ -78,23 +103,47 @@ export default class CityList extends React.Component {
         cityIndex.unshift('hot')
         cityList['#'] = [await getCurrentCity()]
         cityIndex.unshift('#')
-        this.setState({
-          cityList: cityList,
-          cityIndex: cityIndex,
-        })
+        this.setState(
+          {
+            cityList: cityList,
+            cityIndex: cityIndex,
+          },
+          () => this.cityListComponent.current.measureAllRows()
+        )
       }
-      console.log(cityList)
-      console.log(cityIndex)
     }
   }
   back = () => window.history.go(-1)
+
+  // 改变城市定位
+  changeCity = ({ label, value }) => {
+    if (HOUSE_CITY.indexOf(label) > -1) {
+      localStorage.setItem('hkzf_city', JSON.stringify({ label, value }))
+      this.back()
+    } else {
+      Toast.show('该城市暂无房源数据！', 1)
+    }
+  }
+
   render() {
     return (
       <div>
         <NavBar onBack={this.back}>城市选择</NavBar>
         <div className="cityList" style={{ width: '100vw', height: 'calc(100vh - 45px)' }}>
-          <AutoSizer>{({ width, height }) => <List width={width} height={height} rowCount={this.state.cityIndex.length} rowHeight={this.getRowHeight} rowRenderer={this.rowRenderer}></List>}</AutoSizer>
+          <AutoSizer>{({ width, height }) => <List scrollToAlignment="start" ref={this.cityListComponent} onRowsRendered={this.onRowsRendered} width={width} height={height} rowCount={this.state.cityIndex.length} rowHeight={this.getRowHeight} rowRenderer={this.rowRenderer}></List>}</AutoSizer>
         </div>
+        <ul className="rightCityIndex">
+          {this.state.cityIndex.map((item, index) => (
+            <div
+              key={item}
+              onClick={() => {
+                this.cityListComponent.current.scrollToRow(index)
+              }}
+            >
+              <li className={index === this.state.index ? 'active' : ''}>{this.formatRightCityIndex(item)}</li>
+            </div>
+          ))}
+        </ul>
       </div>
     )
   }
