@@ -128,7 +128,7 @@ export default class CityList extends React.Component {
   render() {
     return (
       <div>
-        <NavBar onBack={this.back}>城市选择</NavBar>
+        <NavBar onBack={() => window.history.go(-1)}>城市选择</NavBar>
         <div className="cityList" style={{ width: '100vw', height: 'calc(100vh - 45px)' }}>
           <AutoSizer>{({ width, height }) => <List scrollToAlignment="start" ref={this.cityListComponent} onRowsRendered={this.onRowsRendered} width={width} height={height} rowCount={this.state.cityIndex.length} rowHeight={this.getRowHeight} rowRenderer={this.rowRenderer}></List>}</AutoSizer>
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 // 导入路由
 import {
   BrowserRouter as Router,
@@ -6,19 +6,19 @@ import {
   Routes,
   // Link,
   Navigate,
-} from "react-router-dom";
+} from 'react-router-dom'
 
 // 导入首页和城市选择组件
-import Home from "./pages/Home";
-import CityList from "./pages/CityList";
+import Home from './pages/Home'
+import CityList from './pages/CityList'
 
-import Smallhome from "./component/mainPage/home/home";
-import Consult from "./component/mainPage/consult/consult";
-import PersonalCenter from "./component/mainPage/personalCenter/personalCenter";
-import FindHouse from "./component/mainPage/findHouse/findHouse";
-import Search from "./pages/Search/search";
-import Test from "./component/test";
-import Map from "./pages/Map/map";
+import Smallhome from './component/mainPage/home/home'
+import Consult from './component/mainPage/consult/consult'
+import PersonalCenter from './component/mainPage/personalCenter/personalCenter'
+import FindHouse from './component/mainPage/findHouse/findHouse'
+import Search from './pages/Search/search'
+import Test from './component/test'
+import Map from './pages/Map'
 
 function App() {
   return (
@@ -44,7 +44,7 @@ function App() {
       </Routes>
       {/* <Link to="/home">首页</Link>' '<Link to="/citylist">城市选择</Link>' '<Link to="/test">测试组件</Link> */}
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
