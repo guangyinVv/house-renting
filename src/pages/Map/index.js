@@ -9,14 +9,12 @@ export default class Map extends React.Component {
   // 地图的缩放等级
   countLevel = 11;
 
-  // 实现动态创建覆盖物的函数
-  renderOverlays = async (map, value, point) => {
+  // 实现动态创建覆盖物的函数,第四个参数判断是小区还是圆
+  renderOverlays = async (map, value, point, circleOrRect) => {
     // point 是包含lng，lat的对象，显示当前城市的经纬度
     const { data } = await this.$http.get(`/area/map?id=${value}`);
-
     map.centerAndZoom(point, this.countLevel);
     // setTimeout(() => {
-    console.log(data.body);
     data.body.forEach((item) => {
       const { coord, value, label: name, count } = item;
       const { longitude, latitude } = coord;
@@ -25,12 +23,24 @@ export default class Map extends React.Component {
           lng: longitude,
           lat: latitude,
         },
-        offset: new window.BMapGL.Size(-35, -35),
       };
       const label = new window.BMapGL.Label("", opts);
-      label.setContent(
-        `<div class="overlay"><div class="name">${name}</div><div class="num">${count}套</div></div>`
-      );
+      if (this.countLevel === 15) {
+        opts.offset = new window.BMapGL.Size(-50, -28);
+        label.setContent(
+          `<div class="rect">
+            <span class="housename">${name}</span>
+            <span class="housenum">${count}套</span>
+            <i class="arrow"></i>
+          </div>`
+        );
+      } else {
+        opts.offset = new window.BMapGL.Size(-35, -35);
+        label.setContent(
+          `<div class="overlay"><div class="name">${name}</div><div class="num">${count}套</div></div>`
+        );
+      }
+
       label.setStyle({
         border: "solid 0px white",
         padding: 0,
@@ -38,7 +48,6 @@ export default class Map extends React.Component {
       });
       label.addEventListener("click", () => {
         this.countLevel += 2;
-        // map.centerAndZoom(opts.position, this.countLevel);
         map.clearOverlays();
         this.renderOverlays(map, value, opts.position);
       });
@@ -66,36 +75,6 @@ export default class Map extends React.Component {
           label,
           async (point) => {
             this.renderOverlays(map, value, point);
-            // point 是包含lng，lat的对象，显示当前城市的经纬度
-            // const { data } = await this.$http.get(`/area/map?id=${value}`);
-
-            // map.centerAndZoom(point, 11);
-            // data.body.forEach((item) => {
-            //   const { coord, value, label: name, count } = item;
-            //   const { longitude, latitude } = coord;
-            //   const opts = {
-            //     position: {
-            //       lng: longitude,
-            //       lat: latitude,
-            //     },
-            //     offset: new window.BMapGL.Size(-35, -35),
-            //   };
-            //   const label = new window.BMapGL.Label("", opts);
-            //   label.setContent(
-            //     `<div class="overlay"><div class="name">${name}</div><div class="num">${count}套</div></div>`
-            //   );
-            //   label.setStyle({
-            //     border: "solid 0px white",
-            //     padding: 0,
-            //     whiteSpace: "nowrap",
-            //   });
-            //   label.addEventListener("click", function () {
-            //     console.log("点击了", value);
-            //     map.centerAndZoom(opts.position, 13);
-            //     map.clearOverlays();
-            //   });
-            //   map.addOverlay(label);
-            // });
           },
           label
         );
