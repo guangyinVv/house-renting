@@ -1,10 +1,12 @@
 import React from "react";
 import MySwiper from "./swiper";
 import "../../../index.scss";
-import { SearchBar } from "antd-mobile";
-import { EnvironmentOutline } from "antd-mobile-icons";
-import { Link } from "react-router-dom";
-import { getCurrentCity } from "../../../utils";
+// import { SearchBar } from "antd-mobile";
+// import { EnvironmentOutline } from "antd-mobile-icons";
+// import { Link } from "react-router-dom";
+// import { getCurrentCity } from "../../../utils";
+
+import SearchHeader from "../../searchHeader";
 
 import nav1 from "../../../assets/nav-1.png";
 import nav2 from "../../../assets/nav-2.png";
@@ -30,12 +32,9 @@ export default class Smallhome extends React.Component {
       groups: [],
       // 最新资讯
       news: [],
-      // 所在城市
-      city: "",
     };
     this.getNews();
     this.getGroups();
-    this.getLocation();
   }
 
   getTabbar = () => {
@@ -93,56 +92,10 @@ export default class Smallhome extends React.Component {
       </div>
     ));
   }
-  // 得到当前所在城市的名称
-  async getLocation() {
-    const data = await getCurrentCity();
-    this.setState({
-      city: data.label,
-    });
-  }
-  // 跳转到城市选择页面
-  jumpToCityList() {
-    document.querySelector(".smallhome-search .jumpToCityList").click();
-  }
-  // 跳转到搜索页面
-  jumpToSearch() {
-    document.querySelector(".smallhome-search .jumpToSearch").click();
-  }
-  // 跳转到地图页面
-  jumpToMap() {
-    document.querySelector(".smallhome-search .jumpToMap").click();
-  }
   render() {
     return (
       <div>
-        <div className="smallhome-search">
-          <div className="search">
-            <div className="positionBox" onClick={this.jumpToCityList}>
-              <div className="position">{this.state.city}</div>
-              <Link
-                style={{ display: "none" }}
-                className="jumpToCityList"
-                to="/citylist"
-              ></Link>
-            </div>
-            <div className="searchBar" onClick={this.jumpToSearch}>
-              <SearchBar></SearchBar>
-              <Link
-                style={{ display: "none" }}
-                className="jumpToSearch"
-                to="/search"
-              ></Link>
-            </div>
-          </div>
-          <div className="choosePosition" onClick={this.jumpToMap}>
-            <EnvironmentOutline />
-            <Link
-              style={{ display: "none" }}
-              className="jumpToMap"
-              to="/map"
-            ></Link>
-          </div>
-        </div>
+        <SearchHeader />
         <MySwiper />
         <div className="smallhome-tabbar">{this.getTabbar()}</div>
         <div className="smallhome-rentGroups">

@@ -1,0 +1,23 @@
+.searchBar{
+  display: flex;
+  flex-wrap: nowrap;
+  height:32px;
+  background-color: rgb(245,245,245);
+}
+
+.searchBar :global(.smallhome-search){
+  transform: translate(calc(-50% + 20px),0);
+  top:0;
+}
+
+.searchBar :global(.positionBox){
+  background-color: rgb(245,245,245);
+}
+
+.leftArrow{
+  transform: translate(6px,6px);
+}
+
+.searchBar :global(#EnvironmentOutline-EnvironmentOutline){
+  color:green
+}
