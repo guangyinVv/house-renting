@@ -1,22 +1,24 @@
 // 下拉菜单组件
-import React from 'react'
-import { Dropdown } from 'antd-mobile'
-import './index.module.css'
+import React from "react";
+import { Dropdown } from "antd-mobile";
+import "./index.module.css";
 
 export default class FilterTitle extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
-  test() {
-    console.log(1)
-  }
+  onTitleClick = (type) => {
+    if (type === null) {
+    } else {
+      this.props.onTitleClick(type);
+    }
+  };
   render() {
-    // console.log(this.props)
-    const { area, way, money, select } = this.props.titleSelectedStatus
+    const { area, way, money, select } = this.props.titleSelectedStatus;
     return (
       <>
-        <Dropdown>
+        <Dropdown onChange={this.onTitleClick}>
           <Dropdown.Item highlight={area} key="area" title="区域">
             123
           </Dropdown.Item>
@@ -31,6 +33,6 @@ export default class FilterTitle extends React.Component {
           </Dropdown.Item>
         </Dropdown>
       </>
-    )
+    );
   }
 }
