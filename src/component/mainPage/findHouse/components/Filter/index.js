@@ -14,6 +14,7 @@ export default class Filter extends React.Component {
         money: false,
         select: false,
       },
+      gotPickerData: [],
       // 控制FilterPicker 或 FilterMore 组件的展示和隐藏
       // area / way / money / select
       openType: "",
@@ -34,22 +35,30 @@ export default class Filter extends React.Component {
 
   // 点击标题高亮
   onTitleClick = (type) => {
+    // console.log(type);
     const { area, rentType, subway, price } = this.state.filtersData;
     let flag = this.state.titleSelectedStatus[type];
+    let data;
+    if (type === "area") {
+      data = [[area, subway]];
+    } else if (type === "way") {
+      data = [rentType];
+    } else if (type === "money") {
+      data = [price];
+    }
+    // 如果点中的这一项中没有选中内容
     if (flag === false) {
-      let data;
-      if (type === "area") {
-        data = [[area, subway]];
-      } else if (type === "way") {
-        data = [rentType];
-      } else if (type === "money") {
-        data = [price];
-      }
       this.setState({
         titleSelectedStatus: {
           ...this.state.titleSelectedStatus,
           [type]: true,
         },
+        openType: type,
+        pickerData: data,
+      });
+    } else {
+      // 如果点中的这一项中有选中内容
+      this.setState({
         openType: type,
         pickerData: data,
       });
@@ -60,12 +69,47 @@ export default class Filter extends React.Component {
   onCancel = () => {
     this.setState({
       openType: "",
+      titleSelectedStatus: {
+        ...this.state.titleSelectedStatus,
+        [this.state.openType]: false,
+      },
     });
   };
 
   // 点击确定按钮
   onSave = () => {
-    this.onCancel();
+    this.setState({
+      openType: "",
+      titleSelectedStatus: {
+        ...this.state.titleSelectedStatus,
+        [this.state.openType]: true,
+      },
+    });
+  };
+
+  // 把该函数给子组件，子组件调用方法把value给父组件
+  getValue = (type, value) => {
+    let index;
+    switch (type) {
+      case "area":
+        index = 0;
+        break;
+      case "way":
+        index = 1;
+        break;
+      case "money":
+        index = 2;
+        break;
+      // select
+      default:
+        index = 3;
+        break;
+    }
+    let temp = Array.from(this.state.gotPickerData);
+    temp[index] = value;
+    this.setState({
+      gotPickerData: temp,
+    });
   };
 
   render() {
@@ -78,7 +122,11 @@ export default class Filter extends React.Component {
         />
         {openType === "area" || openType === "way" || openType === "money" ? (
           <div>
-            <FilterPicker data={this.state.pickerData} />
+            <FilterPicker
+              data={this.state.pickerData}
+              type={this.state.openType}
+              sendValue={this.getValue}
+            />
             {/* 取消，确定按钮 */}
             <div className={styles.buttons}>
               <div className={styles.cancel}>
