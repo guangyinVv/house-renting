@@ -4,25 +4,21 @@ import { PickerView } from "antd-mobile";
 export default class FilterPicker extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(props.data);
-    // console.log(props.type);
     this.state = {
-      data: props.data,
+      data: props.defaultList.length > 0 ? props.defaultList : props.data,
       // value是当前选中值
       value: [],
+      defaultData: props.defaultData.length > 0 ? props.defaultData : ["null"],
     };
     // 用来判断选项的哪一部分发生了改变
     this.prevItem = [];
   }
 
-  // 对传进来的数据进行处理，使其成为能够被识别的数组
-  formatData() {
-    // const data = this.props.data;
+  componentDidMount() {
+    // this.initDefaultData();
   }
 
   findChildren(data, value) {
-    // console.log(data)
-    // console.log(value)
     let temp;
     data.some((item) => {
       if (item.value === value) {
@@ -38,10 +34,9 @@ export default class FilterPicker extends React.Component {
   updateData = (currentValue) => {
     if (this.props.type === "area") {
       // 表明这是首次加载，我们初始化下数据
-      if (this.prevItem.length === 0) {
+      if (this.prevItem.length === 0 && this.state.data.length !== 3) {
         this.prevItem = currentValue;
         let temp = Array.from(this.state.data);
-        // temp[1]=temp[0]
         temp[1] = temp[0][0].children;
         temp[2] = [{ label: "不限", value: "null" }];
         this.setState({
@@ -100,6 +95,7 @@ export default class FilterPicker extends React.Component {
     return (
       <div className="filterPicker-container">
         <PickerView
+          defaultValue={this.state.defaultData}
           onChange={this.updateData}
           columns={this.state.data}
           mouseWheel={true}

@@ -14,13 +14,16 @@ export default class Filter extends React.Component {
         money: false,
         select: false,
       },
-      gotPickerData: [],
+      gotPickerValue: [],
       // 控制FilterPicker 或 FilterMore 组件的展示和隐藏
       // area / way / money / select
       openType: "",
       // 通过接口获取的所有数据
       filtersData: "",
       pickerData: [],
+      // 用于展示选择器视图的默认内容
+      defaultList: [],
+      defaultData: [],
     };
     this.getFiltersData();
   }
@@ -31,6 +34,83 @@ export default class Filter extends React.Component {
     this.setState({
       filtersData: data.body,
     });
+  }
+
+  componentDidUpdate() {}
+
+  findDataByValue(data, value) {
+    let temp;
+    data.some((item) => {
+      if (item.value === value) {
+        temp = item;
+        return true;
+      }
+      return false;
+    });
+    return temp;
+  }
+
+  // 初始化默认选择项
+  initDefaultData() {
+    const {
+      gotPickerValue: defaultData,
+      pickerData: data,
+      openType: type,
+    } = this.state;
+
+    if (data.length === 0) {
+      return false;
+    }
+
+    let index;
+    switch (type) {
+      case "area":
+        index = 0;
+        break;
+      case "way":
+        index = 1;
+        break;
+      case "money":
+        index = 2;
+        break;
+      default:
+        index = 3;
+        break;
+    }
+    let myData = defaultData[index];
+    if (defaultData.length === 0 || myData.length === 0) {
+      return false;
+    } else {
+      let temp = [];
+      let tempData = [];
+      // 第0项
+      tempData[0] = data[index];
+      temp[0] = this.findDataByValue(tempData[0], myData[0]);
+      tempData[1] = temp[0].children;
+      temp[1] = this.findDataByValue(tempData[1], myData[1]);
+      tempData[2] = temp[1].children;
+      try {
+        temp[2] = this.findDataByValue(tempData[2], myData[2]);
+      } catch (error) {
+        tempData[2] = [
+          {
+            label: "不限",
+            value: "null",
+          },
+        ];
+        temp[2] = "null";
+      }
+      for (var i = 0; i < temp.length; i++) {
+        temp[i] = temp[i].value;
+      }
+      this.setState({
+        // data: tempData,
+        // defaultData: temp,
+        defaultList: tempData,
+        defaultData: temp,
+      });
+      return true;
+    }
   }
 
   // 点击标题高亮
@@ -78,13 +158,20 @@ export default class Filter extends React.Component {
 
   // 点击确定按钮
   onSave = () => {
-    this.setState({
-      openType: "",
-      titleSelectedStatus: {
-        ...this.state.titleSelectedStatus,
-        [this.state.openType]: true,
+    this.setState(
+      {
+        titleSelectedStatus: {
+          ...this.state.titleSelectedStatus,
+          [this.state.openType]: true,
+        },
       },
-    });
+      () => {
+        this.initDefaultData();
+        this.setState({
+          openType: "",
+        });
+      }
+    );
   };
 
   // 把该函数给子组件，子组件调用方法把value给父组件
@@ -105,10 +192,10 @@ export default class Filter extends React.Component {
         index = 3;
         break;
     }
-    let temp = Array.from(this.state.gotPickerData);
+    let temp = Array.from(this.state.gotPickerValue);
     temp[index] = value;
     this.setState({
-      gotPickerData: temp,
+      gotPickerValue: temp,
     });
   };
 
@@ -126,6 +213,8 @@ export default class Filter extends React.Component {
               data={this.state.pickerData}
               type={this.state.openType}
               sendValue={this.getValue}
+              defaultList={this.state.defaultList}
+              defaultData={this.state.defaultData}
             />
             {/* 取消，确定按钮 */}
             <div className={styles.buttons}>
