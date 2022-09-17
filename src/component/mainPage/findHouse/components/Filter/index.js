@@ -26,6 +26,13 @@ export default class Filter extends React.Component {
       defaultList: {},
       // 初始展示的数据（数组，每项只有一个或三个）
       defaultData: {},
+      // 用于展示房源内容的数据
+      showData: {
+        area: "null",
+        way: "null",
+        money: "null",
+        select: "null",
+      },
     };
     this.getFiltersData();
   }
@@ -87,21 +94,7 @@ export default class Filter extends React.Component {
       return false;
     }
 
-    let index;
-    switch (type) {
-      case "area":
-        index = 0;
-        break;
-      case "way":
-        index = 1;
-        break;
-      case "money":
-        index = 2;
-        break;
-      default:
-        index = 3;
-        break;
-    }
+    let index = this.getIndexByType(type);
     if (index === 3) {
       return;
     }
@@ -201,9 +194,13 @@ export default class Filter extends React.Component {
         openType: "",
       });
     } else {
+      let index = this.getIndexByType(openType);
+      let newGotPickerValue = Array.from(this.state.gotPickerValue);
+      newGotPickerValue[index] = [];
       this.setState({
         defaultData: { ...this.state.defaultData, [openType]: [] },
         defaultList: { ...this.state.defaultList, [openType]: [] },
+        gotPickerValue: newGotPickerValue,
         openType: "",
         titleSelectedStatus: {
           ...this.state.titleSelectedStatus,
@@ -213,25 +210,66 @@ export default class Filter extends React.Component {
     }
   };
   // 点击确定按钮
-  onSave = () => {
-    this.setState(
-      {
-        titleSelectedStatus: {
-          ...this.state.titleSelectedStatus,
-          [this.state.openType]: true,
+  onSave = async () => {
+    const openType = this.state.openType;
+    if (this.state.openType !== "select") {
+      await this.setState(
+        {
+          titleSelectedStatus: {
+            ...this.state.titleSelectedStatus,
+            [this.state.openType]: true,
+          },
         },
-      },
-      () => {
-        this.initDefaultData();
-        this.setState({
-          openType: "",
-        });
-      }
-    );
+        () => {
+          this.initDefaultData();
+          this.setState({
+            openType: "",
+          });
+        }
+      );
+    }
+
+    await this.formatShowData(openType);
+    this.props.getHouseListData(this.state.showData);
   };
 
-  // 把该函数给子组件，子组件调用方法把value给父组件
-  getValue = (type, value) => {
+  // 对得到的数据进行处理，使得数据可以用于展示
+  formatShowData(type) {
+    const { gotPickerValue, showData } = this.state;
+    let newShowData = { ...showData };
+    // 需要更新的那一部分内容
+    let updatedValue = "null";
+    if (type === "area") {
+      // area区域有选中值
+      if (gotPickerValue[0] !== undefined) {
+        if (gotPickerValue[0].length === 3) {
+          if (gotPickerValue[0][2] === "null") {
+            if (gotPickerValue[0][1] === "null") {
+              updatedValue = gotPickerValue[0][0];
+            } else {
+              updatedValue = gotPickerValue[0][1];
+            }
+          } else {
+            updatedValue = gotPickerValue[0][2];
+          }
+        }
+      }
+    } else {
+      let index = this.getIndexByType(type);
+      if (
+        gotPickerValue[index] !== undefined &&
+        gotPickerValue[index].length !== 0
+      ) {
+        updatedValue = gotPickerValue[index].join(",");
+      }
+    }
+    newShowData[type] = updatedValue;
+    this.setState({
+      showData: newShowData,
+    });
+  }
+
+  getIndexByType(type) {
     let index;
     switch (type) {
       case "area":
@@ -248,25 +286,36 @@ export default class Filter extends React.Component {
         index = 3;
         break;
     }
+    return index;
+  }
+
+  // 把该函数给子组件，子组件调用方法把value给父组件
+  getValue = (type, value) => {
+    let index = this.getIndexByType(type);
     let temp = Array.from(this.state.gotPickerValue);
     // console.log(value)
     temp[index] = value;
-    this.setState({
-      gotPickerValue: temp,
-    });
-    if (type === "select") {
-      if (value.length === 0) {
-        this.setState({
-          titleSelectedStatus: {
-            ...this.state.titleSelectedStatus,
-            [this.state.openType]: false,
-          },
-        });
+    this.setState(
+      {
+        gotPickerValue: temp,
+      },
+      () => {
+        if (type === "select") {
+          if (value.length === 0) {
+            this.setState({
+              titleSelectedStatus: {
+                ...this.state.titleSelectedStatus,
+                [this.state.openType]: false,
+              },
+            });
+          }
+          this.onSave();
+          this.setState({
+            openType: "",
+          });
+        }
       }
-      this.setState({
-        openType: "",
-      });
-    }
+    );
   };
 
   render() {
@@ -300,6 +349,7 @@ export default class Filter extends React.Component {
           </div>
         ) : null}
         {this.renderFilterMore()}
+        {/* 遮罩层 */}
         {openType !== "" ? (
           <div className={styles.mask} onClick={this.onCancel}></div>
         ) : null}

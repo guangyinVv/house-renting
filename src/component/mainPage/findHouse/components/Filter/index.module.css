@@ -1,6 +1,6 @@
 .buttons{
   display: flex;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   background-color: #fff;
   z-index:2 !important;
 }

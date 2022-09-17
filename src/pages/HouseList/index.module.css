@@ -1,0 +1,51 @@
+.houseList{
+  padding: 0 10px;
+  height:fit-content;
+  overflow: scroll;
+}
+
+.item{
+  display: flex;
+  padding:15px 0 ;
+  border-bottom: 1px solid rgba(133, 132, 132,0.3);
+}
+
+.left{
+  padding:5px;
+}
+
+.img{
+  width: 28vw;
+  height: 70px;
+  background-color: pink;
+}
+
+.title{
+  font-size: 18px;
+  font-weight: 550;
+}
+
+.desc{
+  color:rgb(182, 186, 190)
+}
+
+.labels{
+  display: flex;
+}
+
+.label{
+  width:fit-content;
+  padding:2px 3px;
+  margin-right: 5px;
+  background-color: skyblue;
+  border-radius: 3px;
+}
+
+.price{
+  color:rgb(255,118,82)
+}
+
+.money{
+  font-size: 18px;
+  margin-right: 2px;
+}
