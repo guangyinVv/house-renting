@@ -5,12 +5,6 @@ export default class FilterPicker extends React.Component {
   constructor(props) {
     super(props)
     const { type, defaultList, defaultData, data } = props
-    // let defaultData = []
-    // if ((type === 'way' || type === 'money') && myDefalutData[type] !== undefined) {
-    //   defaultData.push(myDefalutData[type][0])
-    // } else {
-    //   defaultData = myDefalutData
-    // }
     this.state = {
       data: defaultList[type] !== undefined && defaultList[type].length > 0 ? defaultList[type] : data,
       // value是当前选中值

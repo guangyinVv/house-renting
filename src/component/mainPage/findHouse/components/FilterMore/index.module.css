@@ -1,0 +1,58 @@
+.more{
+  position: absolute;
+  top:0;
+  right:0;
+  background-color: #fff;
+  height: 100vh;
+  width: 80vw;
+  z-index:2;
+}
+.title{
+  border-top:solid rgb(240, 233, 233) 1px;
+  font-size: 20px;
+  padding:13px 0;
+}
+
+.items{
+  color:rgb(79,155,137);
+  font-weight: 550;
+  display: flex;
+  font-size: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.item{
+  box-sizing: border-box;
+  width:  17vw;
+  height: 29.33px;
+  border: solid 1px rgb(79,155,137);
+  padding:5px 15px;
+  border-radius: 3px;
+  margin-right:5px;
+  margin-bottom: 10px;
+}
+
+.more{
+  padding-left: 13px;
+}
+
+.active{
+  background-color: rgb(215,243,237);
+}
+
+.more :global(.adm-button-default){
+  color:rgb(0,181,120);
+  width: calc(30vw * 0.8);
+
+}
+
+.more :global(.adm-button-success){
+  width: calc(70vw * 0.8);
+}
+
+.buttons{
+  position: fixed;
+  bottom:0;
+  display: flex;
+  margin-left: -13px;
+}

@@ -3,6 +3,7 @@ import FilterTitle from '../FilterTitle'
 import FilterPicker from '../FilterPicker'
 import styles from './index.module.css'
 import { Button } from 'antd-mobile'
+import FilterMore from '../FilterMore'
 
 export default class Filter extends React.Component {
   constructor() {
@@ -23,6 +24,7 @@ export default class Filter extends React.Component {
       pickerData: [],
       // 用于展示选择器视图的默认内容
       defaultList: {},
+      // 初始展示的数据（数组，每项只有一个或三个）
       defaultData: {},
     }
     this.getFiltersData()
@@ -72,6 +74,9 @@ export default class Filter extends React.Component {
       default:
         index = 3
         break
+    }
+    if (index === 3) {
+      return
     }
     let myData = defaultData[index]
     if (defaultData.length === 0 || myData.length === 0) {
@@ -157,6 +162,8 @@ export default class Filter extends React.Component {
   // 隐藏对话框
   onCancel = () => {
     this.setState({
+      defaultData: { ...this.state.defaultData, [this.state.openType]: [] },
+      defaultList: { ...this.state.defaultList, [this.state.openType]: [] },
       openType: '',
       titleSelectedStatus: {
         ...this.state.titleSelectedStatus,
@@ -228,9 +235,10 @@ export default class Filter extends React.Component {
                 </Button>
               </div>
             </div>
-            <div className={styles.mask}></div>
           </div>
         ) : null}
+        {openType === 'select' ? <FilterMore /> : null}
+        {openType !== '' ? <div className={styles.mask}></div> : null}
       </>
     )
   }
