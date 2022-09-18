@@ -41,6 +41,10 @@ export default class FilterTitle extends React.Component {
           break;
       }
       this.props.onTitleClick(temp);
+      const body = document.querySelector("body");
+      setTimeout(function () {
+        body.classList.remove("adm-overflow-hidden");
+      }, 0);
     };
   }
   render() {
@@ -50,16 +54,16 @@ export default class FilterTitle extends React.Component {
         {/* <Dropdown onChange={this.onTitleClick}> */}
         <Dropdown>
           <Dropdown.Item highlight={area} key="area" title="区域">
-            123
+            1
           </Dropdown.Item>
           <Dropdown.Item highlight={way} key="way" title="方式">
-            4
+            1
           </Dropdown.Item>
           <Dropdown.Item highlight={money} key="money" title="租金">
-            15
+            1
           </Dropdown.Item>
           <Dropdown.Item highlight={select} key="select" title="筛选">
-            15
+            1
           </Dropdown.Item>
         </Dropdown>
       </div>

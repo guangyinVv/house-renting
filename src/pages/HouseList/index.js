@@ -1,29 +1,41 @@
-import React from 'react'
-import styles from './index.module.css'
+import React from "react";
+import styles from "./index.module.css";
 
 export default class HouseList extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      HouseListData: props.HouseListData,
-    }
+    super(props);
+    console.log(props.HouseListData);
+    // this.state = {
+    //   HouseListData: Array.from(props.HouseListData),
+    // };
   }
 
   test = () => {
-    const { HouseListData } = this.state
-    console.log(HouseListData)
+    console.log(this.props.HouseListData);
+    const { HouseListData } = this.props;
     return HouseListData.map((item, index) => {
       return (
         <div className={styles.item} key={index}>
           <div className={styles.left}>
-            <img className={styles.img} src={`${this.$baseUrl}${item.houseImg}`} alt=""></img>
+            <img
+              className={styles.img}
+              src={`${this.$baseUrl}${item.houseImg}`}
+              alt=""
+            ></img>
           </div>
           <div className={styles.right}>
             <div className={styles.title}>{item.title}</div>
             <p className={styles.desc}>{item.desc}</p>
             <div className={styles.labels}>
-              <div className={styles.label}>近地铁</div>
-              <div className={styles.label}>近地铁</div>
+              {item.tags.map((item1) => {
+                return (
+                  <div key={item1} className={styles.label}>
+                    {item1}
+                  </div>
+                );
+              })}
+              {/* <div className={styles.label}>近地铁</div>
+              <div className={styles.label}>近地铁</div> */}
             </div>
             <div className={styles.price}>
               <span className={styles.money}>{item.price}</span>
@@ -31,9 +43,9 @@ export default class HouseList extends React.Component {
             </div>
           </div>
         </div>
-      )
-    })
-  }
+      );
+    });
+  };
 
   render() {
     return (
@@ -57,6 +69,6 @@ export default class HouseList extends React.Component {
           </div>
         </div> */}
       </div>
-    )
+    );
   }
 }
