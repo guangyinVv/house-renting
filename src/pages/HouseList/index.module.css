@@ -1,6 +1,10 @@
 .houseList{
+  position: absolute;
+  top:74px;
   padding: 0 10px;
   height:fit-content;
+  box-sizing: content-box;
+  padding-bottom: 48px;
   overflow: scroll;
 }
 
