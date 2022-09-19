@@ -1,5 +1,7 @@
 ## 好客租房移动 web
 
+在 area 区域选中地铁时会出现 undefined
+
 ### vscode 配置
 
 ```
