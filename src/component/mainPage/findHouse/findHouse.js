@@ -35,7 +35,9 @@ export default class FindHouse extends React.Component {
   async searchHouseList() {
     const { value } = JSON.parse(localStorage.getItem("hkzf_city"));
 
-    const { area, mode, price, more } = this.HouseListValue;
+    const { area: area1, mode, price, more } = this.HouseListValue;
+
+    const area = area1 !== undefined ? area1 : "null";
 
     const { data } = await this.$http.get("/houses", {
       params: {

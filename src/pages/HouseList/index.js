@@ -11,10 +11,10 @@ export default class HouseList extends React.Component {
     // };
   }
 
-  shouldComponentUpdate() {
-    console.log(1);
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   console.log(1);
+  //   return true;
+  // }
 
   renderHouseList = () => {
     console.log(this.props.HouseListData);
