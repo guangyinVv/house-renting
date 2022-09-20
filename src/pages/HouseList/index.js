@@ -1,23 +1,30 @@
 import React from "react";
 import styles from "./index.module.css";
-import { InfiniteScroll, List } from "antd-mobile";
+import { InfiniteScroll, List, ErrorBlock } from "antd-mobile";
 
 export default class HouseList extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.HouseListData);
-    // this.state = {
-    //   HouseListData: Array.from(props.HouseListData),
-    // };
+    this.state = {
+      hasMore: true,
+    };
+    // 节流阀，防止search函数触发过多
+    this.searchFlag = true;
   }
 
-  shouldComponentUpdate() {
-    console.log(1);
-    return true;
-  }
+  searchHouseList = async () => {
+    if (this.searchFlag && this.props.searchHouseList !== undefined) {
+      this.searchFlag = false;
+      const flag = await this.props.searchHouseList();
+      this.searchFlag = true;
+      this.setState({
+        hasMore: flag,
+      });
+    }
+  };
 
   renderHouseList = () => {
-    console.log(this.props.HouseListData);
+    // console.log(this.props.HouseListData);
     const { HouseListData } = this.props;
     return HouseListData.map((item, index) => {
       return (
@@ -55,15 +62,35 @@ export default class HouseList extends React.Component {
     });
   };
 
-  test() {
-    console.log(1);
-  }
-
   render() {
     return (
       <div className={styles.houseList}>
-        <List>{this.renderHouseList()}</List>
-        <InfiniteScroll loadMore={this.test} hasMore={true} />
+        {this.props.HouseListData.length === 0 &&
+        this.state.hasMore === false ? (
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              transform: "translate(-50%,0)",
+            }}
+          >
+            <ErrorBlock
+              status="empty"
+              style={{
+                "--image-height": "150px",
+              }}
+              // description={<span>没有找到房源，请您换个搜索条件吧</span>}
+            />
+          </div>
+        ) : (
+          <div>
+            <List>{this.renderHouseList()}</List>
+            <InfiniteScroll
+              loadMore={this.searchHouseList}
+              hasMore={this.state.hasMore}
+            />
+          </div>
+        )}
 
         {/* <div className={styles.item}>
           <div className={styles.left}>
