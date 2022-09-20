@@ -1,47 +1,17 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
-import { AppOutline, MessageOutline, UnorderedListOutline, UserOutline } from 'antd-mobile-icons'
-import { TabBar } from 'antd-mobile'
-const Bottom = () => {
-  const location = useLocation()
-  const { pathname } = location
-  // const setRouteActive = (value) => {
-  //   history.push(value)
-  // }
+import { Spring, animated } from 'react-spring'
 
-  const tabs = [
-    {
-      key: '/home',
-      title: '首页',
-      icon: <AppOutline />,
-    },
-    {
-      key: '/todo',
-      title: '待办',
-      icon: <UnorderedListOutline />,
-    },
-    {
-      key: '/message',
-      title: '消息',
-      icon: <MessageOutline />,
-    },
-    {
-      key: '/me',
-      title: '我的',
-      icon: <UserOutline />,
-    },
-  ]
-  return (
-    <TabBar activeKey={pathname}>
-      {tabs.map((item) => (
-        <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
-      ))}
-    </TabBar>
-  )
-}
+export default class Test extends PureComponent {
+  handleAsyncTo = async (next, cancel) => {
+    await next({ opacity: 1, color: '#ffaaee' })
+    await next({ opacity: 0, color: 'rgb(14,26,19)' })
+  }
 
-export default class Test extends React.Component {
   render() {
-    return <Bottom></Bottom>
+    // ...
+    return (
+      <Spring to={handleAsyncTo} from={{ opacity: 0, color: 'red' }}>
+        {(styles) => <animated.div style={styles}>I will fade in and out</animated.div>}
+      </Spring>
+    )
   }
 }

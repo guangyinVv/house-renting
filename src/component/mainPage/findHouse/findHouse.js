@@ -43,6 +43,8 @@ export default class FindHouse extends React.Component {
       icon: 'loading',
     })
     await this.searchHouseList()
+    Toast.clear()
+    if (this.count !== 0) Toast.show({ content: `共找到${this.count}套房源` })
   }
 
   // 用来获取房屋列表数据
@@ -76,8 +78,7 @@ export default class FindHouse extends React.Component {
         })
       }
     }
-    Toast.clear()
-    Toast.show({ content: `共找到${data.body.count}套房源` })
+    this.count = data.body.count
     this.pageInfo = {
       start: start + data.body.list.length,
       end: end + data.body.list.length,
