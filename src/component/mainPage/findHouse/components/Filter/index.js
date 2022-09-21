@@ -4,7 +4,6 @@ import FilterPicker from '../FilterPicker'
 import styles from './index.module.css'
 import { Button } from 'antd-mobile'
 import FilterMore from '../FilterMore'
-// 导入react-spring动画组件
 import { Spring, animated } from 'react-spring'
 
 export default class Filter extends React.Component {
@@ -322,6 +321,35 @@ export default class Filter extends React.Component {
     )
   }
 
+  // 渲染遮罩层
+  renderMask() {
+    const { openType } = this.state
+    return (
+      <Spring
+        from={{ opacity: 0 }}
+        to={{ opacity: openType === '' ? 0 : 1 }}
+        onRest={{
+          x: () => console.log('x.onRest'),
+          y: () => console.log('y.onRest'),
+        }}
+      >
+        {(props) => {
+          console.log(props.opacity)
+          if (props.opacity === 0) return null
+          return (
+            <animated.div
+              className={styles.mask}
+              style={props}
+              onClick={() => {
+                this.setState({ openType: '' })
+              }}
+            />
+          )
+        }}
+      </Spring>
+    )
+  }
+
   render() {
     const { titleSelectedStatus, openType } = this.state
     return (
@@ -345,7 +373,7 @@ export default class Filter extends React.Component {
         ) : null}
         {this.renderFilterMore()}
         {/* 遮罩层 */}
-        {openType !== '' ? <Spring opacity={toggle ? 1 : 0}>{(props) => <animated.div style={props} className={styles.mask} onClick={this.onCancel}></animated.div>}</Spring> : null}
+        {this.renderMask()}
       </>
     )
   }

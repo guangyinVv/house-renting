@@ -17,7 +17,7 @@ import Consult from './component/mainPage/consult/consult'
 import PersonalCenter from './component/mainPage/personalCenter/personalCenter'
 import FindHouse from './component/mainPage/findHouse/findHouse'
 import Search from './pages/Search/search'
-import Test from './component/test'
+import Test from './component/Test/test'
 import Map from './pages/Map'
 
 function App() {
