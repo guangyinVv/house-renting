@@ -1,40 +1,37 @@
-import React from 'react'
-import { Spring, animated } from 'react-spring'
+import { Spring, animated } from "react-spring";
+import React from "react";
 
 class Test extends React.Component {
-  state = {
-    toggle: true,
-  }
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        toggle: !this.state.toggle,
-      })
-    }, 3000)
-  }
   render() {
-    const { toggle } = this.state
     return (
-      <div>
-        {toggle ? (
-          <Spring
-            // loop
-            from={{ opacity: 0, color: 'red', backgroundColor: 'white', width: '100px', height: '100px' }}
-            to={[
-              { opacity: 1, color: '#ffaaee', backgroundColor: 'pink', width: '300px', height: '300px' },
-              // { opacity: 0, color: 'rgb(14,26,19)' },
-            ]}
-          >
-            {(styles) => (
-              <animated.div className="card" style={styles}>
-                i will fade
-              </animated.div>
-            )}
-          </Spring>
-        ) : null}
-      </div>
-    )
+      <Spring
+        from={{ opacity: 0 }}
+        to={{ opacity: 1 }}
+        onRest={() => {
+          console.log(1);
+        }}
+      >
+        {(props) => {
+          return <animated.div style={props}>123</animated.div>;
+        }}
+      </Spring>
+    );
   }
 }
 
-export default Test
+// function Test() {
+//   const props = useSpring({
+//     // loop: true,
+//     to: [{ opacity: 1 }, { opacity: 0 }],
+//     from: { opacity: 0 },
+//     reset: true,
+//     delay: 200,
+//     onRest: () => {
+//       console.log(1);
+//     },
+//   });
+
+//   return <animated.h1 style={props}>hello</animated.h1>;
+// }
+
+export default Test;
