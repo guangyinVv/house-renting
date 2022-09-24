@@ -5,13 +5,15 @@ import App from "./App";
 // 导入样式
 // import "antd-mobile/2x/bundle/style.css";
 import axios from "axios";
+// 用于给函数组件传递axios
+import UserContext from "./utils/userContext";
 axios.defaults.baseURL = "http://localhost:8080";
 React.Component.prototype.$http = axios;
 React.Component.prototype.$baseUrl = "http://localhost:8080";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <div>
+  <UserContext.Provider value={{ axios: axios }}>
     <App />
-  </div>
+  </UserContext.Provider>
 );

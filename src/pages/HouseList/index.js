@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./index.module.css";
 import { InfiniteScroll, List, ErrorBlock } from "antd-mobile";
+// 给列表组件加上props校验
+import PropTypes from "prop-types";
 
-export default class HouseList extends React.Component {
+class HouseList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,8 +12,10 @@ export default class HouseList extends React.Component {
     };
     // 节流阀，防止search函数触发过多
     this.searchFlag = true;
+    this.infinite = props.infinite;
   }
 
+  // 通过props传入的查找列表的方法(但该方法获取的数据不在此组件中)，如果往下还有列表，则返回true，否则返回false
   searchHouseList = async () => {
     if (this.searchFlag && this.props.searchHouseList !== undefined) {
       this.searchFlag = false;
@@ -22,6 +26,9 @@ export default class HouseList extends React.Component {
       });
     }
   };
+  componentDidMount() {
+    if (this.infinite === false) this.searchHouseList();
+  }
 
   renderHouseList = () => {
     // console.log(this.props.HouseListData);
@@ -85,10 +92,12 @@ export default class HouseList extends React.Component {
         ) : (
           <div>
             <List>{this.renderHouseList()}</List>
-            <InfiniteScroll
-              loadMore={this.searchHouseList}
-              hasMore={this.state.hasMore}
-            />
+            {this.infinite === false ? null : (
+              <InfiniteScroll
+                loadMore={this.searchHouseList}
+                hasMore={this.state.hasMore}
+              />
+            )}
           </div>
         )}
 
@@ -113,3 +122,10 @@ export default class HouseList extends React.Component {
     );
   }
 }
+// props校验
+HouseList.propTypes = {
+  searchHouseList: PropTypes.func.isRequired,
+  HouseListData: PropTypes.any.isRequired,
+};
+
+export default HouseList;
