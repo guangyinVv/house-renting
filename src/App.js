@@ -20,6 +20,7 @@ import Search from "./pages/Search/search";
 import Test from "./component/Test/test";
 import Map from "./pages/Map";
 import HouseDetail from "./pages/HouseDetail";
+import Login from "./pages/Login";
 
 function App(props) {
   return (
@@ -44,6 +45,8 @@ function App(props) {
         <Route path="/test" element={<Test />}></Route>
         {/* 房屋详情页面 */}
         <Route path="/houseDetail/:id" element={<HouseDetail />}></Route>
+        {/* 登录界面 */}
+        <Route path="/login" element={<Login />}></Route>
       </Routes>
       {/* <Link to="/home">首页</Link>' '<Link to="/citylist">城市选择</Link>' '<Link to="/test">测试组件</Link> */}
     </Router>

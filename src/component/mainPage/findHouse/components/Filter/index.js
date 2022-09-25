@@ -46,29 +46,6 @@ export default class Filter extends React.Component {
     });
   }
 
-  // 渲染筛选部分
-  renderFilterMore() {
-    const {
-      openType,
-      filtersData: { roomType, oriented, floor, characteristic },
-    } = this.state;
-    const data = {
-      roomType,
-      oriented,
-      floor,
-      characteristic,
-    };
-    if (openType !== "select") return null;
-    else
-      return (
-        <FilterMore
-          defaultData={this.state.gotPickerValue[3]}
-          sendValue={this.getValue}
-          data={data}
-        />
-      );
-  }
-
   findDataByValue(data, value) {
     let temp;
     data.some((item) => {
@@ -338,6 +315,51 @@ export default class Filter extends React.Component {
     );
   };
 
+  // 渲染筛选部分
+  renderFilterMore() {
+    const {
+      openType,
+      filtersData: { roomType, oriented, floor, characteristic },
+    } = this.state;
+    const data = {
+      roomType,
+      oriented,
+      floor,
+      characteristic,
+    };
+    if (roomType === undefined) {
+      return null;
+    }
+    return (
+      <Spring
+        to={{
+          transform:
+            openType !== "select" ? "translate(100%,0%)" : "translate(0%,0%)",
+        }}
+        onStart={() => {
+          var mask = document.querySelector(`.${styles.filterMoreBox}`);
+          mask.style.display = "block";
+        }}
+        onRest={() => {
+          var mask = document.querySelector(`.${styles.filterMoreBox}`);
+          mask.style.display = openType === "" ? "none" : "block";
+        }}
+      >
+        {(props) => {
+          return (
+            <animated.div style={props} className={styles.filterMoreBox}>
+              <FilterMore
+                defaultData={this.state.gotPickerValue[3]}
+                sendValue={this.getValue}
+                data={data}
+              />
+            </animated.div>
+          );
+        }}
+      </Spring>
+    );
+  }
+
   // 渲染遮罩层
   renderMask() {
     const { openType } = this.state;
@@ -348,7 +370,6 @@ export default class Filter extends React.Component {
         to={{ opacity: openType === "" ? 0 : 1 }}
         onStart={() => {
           var mask = document.querySelector(`.${styles.mask}`);
-          // mask.style.display = openType === "" ? "block" : "none";
           mask.style.display = "block";
         }}
         onRest={() => {

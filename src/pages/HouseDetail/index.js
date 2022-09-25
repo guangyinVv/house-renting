@@ -1,5 +1,5 @@
 import { NavBar, Button, Swiper } from "antd-mobile";
-import { SendOutline, UserSetOutline } from "antd-mobile-icons";
+import { SendOutline, UserSetOutline, StarOutline } from "antd-mobile-icons";
 import { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import "../../assets/iconfont/iconfont.css";
@@ -117,8 +117,24 @@ function HouseDetail(props) {
       </Swiper.Item>
     ));
 
+  const renderTags = () => {
+    return houseDetailData.tags.map((item, index) => {
+      let tagIndex = 0;
+      if (index > 2) {
+        tagIndex = 2;
+      } else {
+        tagIndex = index;
+      }
+      return (
+        <div key={index} className={styles[`tag${tagIndex}`]}>
+          {item}
+        </div>
+      );
+    });
+  };
+
   return (
-    <div className={styles.body}>
+    <>
       <div className={styles.NavBar}>
         <NavBar back="返回" onBack={back} right={rightIcon}>
           {houseDetailData.community}
@@ -139,13 +155,7 @@ function HouseDetail(props) {
 
       <div className={styles.titleBox}>
         <div className={styles.title}>{houseDetailData.title}</div>
-        <div className={styles.tags}>
-          {houseDetailData.tags.map((item, index) => (
-            <div key={index} className={styles.tag}>
-              {item}
-            </div>
-          ))}
-        </div>
+        <div className={styles.tags}>{renderTags()}</div>
       </div>
       <div className={styles.detail}>
         <div>
@@ -196,8 +206,7 @@ function HouseDetail(props) {
         {houseDetailData.supporting.length === 0 ? (
           <div className={styles.noData}>暂无数据</div>
         ) : (
-          <HouseConfig />
-          // <div className={styles.icons}>{renderIcons()}</div>
+          <HouseConfig list={houseDetailData.supporting} />
         )}
       </div>
       <div className={styles.summary}>
@@ -226,7 +235,11 @@ function HouseDetail(props) {
               </Button>
             </div>
           </div>
-          <div className={styles.comment}>{houseDetailData.description}</div>
+          <div className={styles.comment}>
+            {houseDetailData.description.length > 0
+              ? houseDetailData.description
+              : "暂无房屋描述"}
+          </div>
         </div>
       </div>
       {/* 猜你喜欢 */}
@@ -241,11 +254,14 @@ function HouseDetail(props) {
 
       {/* <div style={{ height: "300px" }}></div> */}
       <div className={styles.bottom}>
-        <div className={styles.function}>收藏</div>
+        <div className={styles.function}>
+          <StarOutline />
+          收藏
+        </div>
         <div className={styles.function}>在线咨询</div>
         <div className={`${styles.function} ${styles.telephone}`}>电话预约</div>
       </div>
-    </div>
+    </>
   );
 }
 

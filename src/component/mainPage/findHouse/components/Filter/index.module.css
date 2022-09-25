@@ -1,28 +1,36 @@
-.buttons{
+.buttons {
   display: flex;
   /* padding-top: 10px; */
   background-color: #fff;
-  z-index:2 !important;
+  z-index: 2 !important;
 }
-:global(.adm-picker-view){
-  z-index:2;
+:global(.adm-picker-view) {
+  z-index: 2;
 }
-.check{
+.check {
   width: 400px;
 }
-.buttons :global(.adm-button-default){
+.buttons :global(.adm-button-default) {
   width: 30vw;
   z-index: 2;
 }
-.buttons :global(.adm-button-success){
+.buttons :global(.adm-button-success) {
   width: 70vw;
   z-index: 2;
 }
-.mask{
-  position:absolute;
-  top:0;
+.mask {
+  position: fixed;
+  top: 0;
   z-index: 1;
-  background-color: rgba(125,128,125,0.6);
+  background-color: rgba(125, 128, 125, 0.6);
   height: 100%;
   width: 100%;
+}
+.filterMoreBox {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 80vw;
 }
