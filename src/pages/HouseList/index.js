@@ -36,7 +36,12 @@ class HouseList extends React.Component {
     return HouseListData.map((item, index) => {
       return (
         <List.Item key={index}>
-          <div className={styles.item}>
+          <div
+            className={styles.item}
+            onClick={() => {
+              window.location.assign(`/houseDetail/${item.houseCode}`);
+            }}
+          >
             <div className={styles.left}>
               <img
                 className={styles.img}

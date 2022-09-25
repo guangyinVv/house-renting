@@ -13,7 +13,9 @@ React.Component.prototype.$baseUrl = "http://localhost:8080";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <UserContext.Provider value={{ axios: axios }}>
+  <UserContext.Provider
+    value={{ axios: axios, baseUrl: "http://localhost:8080" }}
+  >
     <App />
   </UserContext.Provider>
 );

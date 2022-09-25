@@ -43,7 +43,7 @@ function App(props) {
         {/* 测试组件 */}
         <Route path="/test" element={<Test />}></Route>
         {/* 房屋详情页面 */}
-        <Route path="/houseDetail" element={<HouseDetail />}></Route>
+        <Route path="/houseDetail/:id" element={<HouseDetail />}></Route>
       </Routes>
       {/* <Link to="/home">首页</Link>' '<Link to="/citylist">城市选择</Link>' '<Link to="/test">测试组件</Link> */}
     </Router>

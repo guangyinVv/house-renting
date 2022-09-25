@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1664016012271') format('truetype');
+  src: url('iconfont.ttf?t=1664074917865') format('truetype');
 }
 
 .iconfont {
@@ -20,18 +20,22 @@
 }
 
 .icon-icon-test2:before {
-  content: "\f092";
+  content: "\f091";
 }
 
 .icon-icon-test3:before {
-  content: "\f093";
+  content: "\f092";
 }
 
 .icon-icon-test4:before {
-  content: "\f094";
+  content: "\f093";
 }
 
 .icon-icon-test5:before {
+  content: "\f094";
+}
+
+.icon-icon-test6:before {
   content: "\f095";
 }
 
@@ -41,5 +45,9 @@
 
 .icon-bingxiang:before {
   content: "\e8b4";
+}
+
+.icon-FLOOR_HEATING_SYSTEM:before {
+  content: "\ea72";
 }
 

@@ -1,6 +1,7 @@
 .NavBar {
-  position: absolute;
+  position: fixed;
   width: 100%;
+  z-index: 10;
 }
 .NavBar :global(.adm-nav-bar) {
   background-color: transparent;
@@ -80,7 +81,7 @@
   background-color: rgb(248, 104, 89);
   width: fit-content;
   padding: 5px 9px;
-  transform: translate(-20px,-40px);
+  transform: translate(-20px, -40px);
 }
 .titleInMap::after {
   content: "";
@@ -91,91 +92,96 @@
   border: 10px solid transparent;
   border-top-color: rgb(248, 104, 89);
 }
-.houseConfig{
+.houseConfig {
   padding: 10px;
   border-bottom: 12px solid rgba(230, 231, 230, 0.5);
 }
-.houseConfig>h3{
+.houseConfig > h3 {
   border-bottom: solid 2px rgba(230, 231, 230, 0.5);
   padding-bottom: 10px;
 }
-.icons{
+/* .icons {
   text-align: center;
   display: flex;
   flex-wrap: wrap;
 }
-.item>span{
+.item > span {
   display: block;
-  padding:10px;
+  padding: 10px;
   font-size: 20px;
 }
-.item>div{
+.item > div {
   font-size: 15px;
 }
-.item{
+.item {
   width: 20%;
-}
-.summary{
-  padding:0 10px;
+} */
+.summary {
+  padding: 0 10px;
   padding-bottom: 10px;
   border-bottom: 12px solid rgba(230, 231, 230, 0.5);
 }
-.summary h3{
+.summary h3 {
   padding: 10px 0;
   border-bottom: solid 2px rgba(230, 231, 230, 0.5);
 }
-.header{
-  margin:15px 0;
-  height:50px;
+.header {
+  margin: 15px 0;
+  height: 50px;
 }
-.avatar{
+.avatar {
   float: left;
 }
-.FullName{
+.FullName {
   float: left;
-  margin-left:10px;
+  margin-left: 10px;
 }
-.identity{
-  color:#e27050;
+.identity {
+  color: #e27050;
   display: flex;
-  height:30px;
+  height: 30px;
   align-items: center;
 }
-.author{
+.author {
   font-size: 16px;
 }
-.sendMessage{
-  float:right;
+.sendMessage {
+  float: right;
 }
-.comment{
+.comment {
   font-size: 15px;
 }
-.youLike h3{
+.youLike h3 {
   margin: 10px;
   border-bottom: solid 2px rgba(230, 231, 230, 0.5);
 }
-.youLike :global(.adm-list-body){
-  border-top: 0px ;
+.youLike :global(.adm-list-body) {
+  border-top: 0px;
 }
 
-.bottom{
+.bottom {
   border-top: solid 2px rgba(230, 231, 230, 0.5);
-  position:fixed;
+  position: fixed;
   display: flex;
   background-color: #fff;
   width: 100%;
-  bottom:0;
+  bottom: 0;
   justify-content: space-around;
+  z-index: 10;
 }
-.function{
-  height:50px;
+.function {
+  height: 50px;
   font-size: 18px;
   line-height: 50px;
   text-align: center;
   width: 33.3333333333%;
   box-sizing: content-box;
-  border-right:1px solid rgba(230, 231, 230, 0.5);
+  border-right: 1px solid rgba(230, 231, 230, 0.5);
 }
-.telephone{
-  background-color: #00B578;
+.telephone {
+  background-color: #00b578;
+  color: white;
+}
+.noData {
+  padding-top: 10px;
 }

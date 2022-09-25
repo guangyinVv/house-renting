@@ -1,0 +1,16 @@
+.icons {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.item > span {
+  display: block;
+  padding: 10px;
+  font-size: 20px;
+}
+.item > div {
+  font-size: 15px;
+}
+.item {
+  width: 20%;
+}

@@ -13,37 +13,44 @@
       "unicode_decimal": 61583
     },
     {
-      "icon_id": "12454008",
-      "name": "099",
+      "icon_id": "12453991",
+      "name": "047",
       "font_class": "icon-test1",
       "unicode": "f090",
       "unicode_decimal": 61584
     },
     {
+      "icon_id": "12454008",
+      "name": "099",
+      "font_class": "icon-test2",
+      "unicode": "f091",
+      "unicode_decimal": 61585
+    },
+    {
       "icon_id": "12454074",
       "name": "126",
-      "font_class": "icon-test2",
+      "font_class": "icon-test3",
       "unicode": "f092",
       "unicode_decimal": 61586
     },
     {
       "icon_id": "12454117",
       "name": "119",
-      "font_class": "icon-test3",
+      "font_class": "icon-test4",
       "unicode": "f093",
       "unicode_decimal": 61587
     },
     {
       "icon_id": "12454136",
       "name": "227",
-      "font_class": "icon-test4",
+      "font_class": "icon-test5",
       "unicode": "f094",
       "unicode_decimal": 61588
     },
     {
       "icon_id": "12454156",
       "name": "178",
-      "font_class": "icon-test5",
+      "font_class": "icon-test6",
       "unicode": "f095",
       "unicode_decimal": 61589
     },
@@ -60,6 +67,13 @@
       "font_class": "bingxiang",
       "unicode": "e8b4",
       "unicode_decimal": 59572
+    },
+    {
+      "icon_id": "24029243",
+      "name": "FLOOR_HEATING_SYSTEM",
+      "font_class": "FLOOR_HEATING_SYSTEM",
+      "unicode": "ea72",
+      "unicode_decimal": 60018
     }
   ]
 }
