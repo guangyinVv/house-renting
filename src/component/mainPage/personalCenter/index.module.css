@@ -1,0 +1,32 @@
+.backgroundImg {
+  width: 100%;
+  z-index: -1;
+}
+.userBackground {
+  height: 150px;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: -60px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 20px gray;
+  z-index: 10;
+  position: relative;
+}
+.avatar {
+  position: relative;
+  background-color: #fff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.avatar img {
+  position: relative;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+}

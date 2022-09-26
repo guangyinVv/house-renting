@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 import { Button, Toast } from "antd-mobile";
 import { Link } from "react-router-dom";
 import { axios } from "../../utils/useAxios";
-import { withFormik } from "formik";
+import { withFormik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 // 正则校验
@@ -13,14 +13,12 @@ const REG_UNAME = /^[a-zA-Z_\d]{5,8}$/;
 const REG_PWD = /^[a-zA-Z_\d]{5,12}$/;
 
 let Login = (props) => {
-  const { values, handleSubmit, handleChange, handleBlur, errors, touched } =
-    props;
+  const { handleSubmit } = props;
   const inputKey = useRef();
   // 给输入框绑定键盘输入事件
   useEffect(() => {
     inputKey.current.addEventListener("keydown", function (e) {
       if (e.keyCode === 13) {
-        console.log(1);
         handleSubmit();
       }
     });
@@ -30,43 +28,41 @@ let Login = (props) => {
   return (
     <>
       <MyNavBar>账号登录</MyNavBar>
-      <form onSubmit={handleSubmit}>
+      <Form>
         <div ref={inputKey} className={styles.inputBox}>
           <div className="adm-input">
-            <input
+            <Field
               className="adm-input-element"
               name="username"
               type="text"
               placeholder="请输入账号"
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            ></input>
+            ></Field>
           </div>
-          {errors.username && touched.username && (
-            <div className={styles.error}>{errors.username}</div>
-          )}
+          <ErrorMessage
+            className={styles.error}
+            name="username"
+            component="div"
+          ></ErrorMessage>
           <div className="adm-input">
-            <input
+            <Field
               className="adm-input-element"
               name="password"
               type="password"
               placeholder="请输入密码"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            ></input>
+            ></Field>
           </div>
-          {errors.password && touched.password && (
-            <div className={styles.error}>{errors.password}</div>
-          )}
+          <ErrorMessage
+            className={styles.error}
+            name="password"
+            component="div"
+          ></ErrorMessage>
         </div>
         <div className={styles.buttonBox}>
           <Button type="submit" color="success">
             登录
           </Button>
         </div>
-      </form>
+      </Form>
       <div style={{ display: "none" }}>
         <Input></Input>
       </div>
