@@ -30,3 +30,48 @@
   width: 60px;
   height: 60px;
 }
+.loginBtn {
+  margin: 0 auto;
+  width: fit-content;
+  text-align: center;
+}
+.nickname {
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.infoBox {
+  position: relative;
+  top: -30px;
+}
+.iconBox {
+  text-align: center;
+  margin: 20px 0;
+}
+.iconContent {
+  margin-bottom: 10px;
+}
+.poster {
+  width: 90%;
+  margin: 0 5%;
+}
+.exit {
+  font-size: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.editInfo {
+  color: gray;
+  margin-top: 10px;
+}
+.editInfo::after {
+  content: "";
+  margin-left: 6px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-left-color: gray;
+  position: relative;
+}

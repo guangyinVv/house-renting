@@ -8,6 +8,20 @@ import { axios } from "../../utils/useAxios";
 import { withFormik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+// 获取url参数
+function GetRequest() {
+  const url = window.location.search; //获取url中"?"符后的字串
+  let theRequest = {};
+  if (url.indexOf("?") !== -1) {
+    let str = url.substr(1);
+    let strs = str.split("&");
+    for (let i = 0; i < strs.length; i++) {
+      theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+    }
+  }
+  return theRequest;
+}
+
 // 正则校验
 const REG_UNAME = /^[a-zA-Z_\d]{5,8}$/;
 const REG_PWD = /^[a-zA-Z_\d]{5,12}$/;
@@ -85,6 +99,7 @@ Login = withFormik({
       .matches(REG_PWD, "长度为5到12位，只能出现数字、字母、下划线"),
   }),
   handleSubmit: async (values) => {
+    const { go } = GetRequest();
     const { username, password } = values;
     const { data } = await axios.post("/user/login", {
       username,
@@ -93,7 +108,8 @@ Login = withFormik({
     const { status, body, description } = data;
     if (status === 200) {
       localStorage.setItem("hkzf_token", body.token);
-      window.history.back(-1);
+      if (go === undefined || go === "") window.history.back(-1);
+      else window.location.replace(go);
     } else Toast.show(description);
   },
 })(Login);
