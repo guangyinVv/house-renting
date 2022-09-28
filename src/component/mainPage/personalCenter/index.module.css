@@ -47,7 +47,12 @@
 }
 .iconBox {
   text-align: center;
-  margin: 20px 0;
+  padding: 20px 0;
+  user-select: none;
+}
+/* 点击时变色 */
+.iconBox:active{
+  background-color: rgba(153,156,153,0.4);
 }
 .iconContent {
   margin-bottom: 10px;

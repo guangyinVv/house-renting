@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 // 导入路由
 import {
   BrowserRouter as Router,
@@ -6,22 +6,25 @@ import {
   Routes,
   // Link,
   Navigate,
-} from "react-router-dom";
+} from 'react-router-dom'
 
 // 导入首页和城市选择组件
-import Home from "./pages/Home";
-import CityList from "./pages/CityList";
+import Home from './pages/Home'
+import CityList from './pages/CityList'
 
-import Smallhome from "./component/mainPage/home/home";
-import Consult from "./component/mainPage/consult/consult";
-import PersonalCenter from "./component/mainPage/personalCenter/personalCenter";
-import FindHouse from "./component/mainPage/findHouse/findHouse";
-import Search from "./pages/Search/search";
-import Test from "./component/Test/test";
-import Map from "./pages/Map";
-import HouseDetail from "./pages/HouseDetail";
-import Login from "./pages/Login";
-import RequireAuth from "./utils/auth";
+import Smallhome from './component/mainPage/home/home'
+import Consult from './component/mainPage/consult/consult'
+import PersonalCenter from './component/mainPage/personalCenter/personalCenter'
+import FindHouse from './component/mainPage/findHouse/findHouse'
+import Search from './pages/Search/search'
+import Test from './component/Test/test'
+import Map from './pages/Map'
+import HouseDetail from './pages/HouseDetail'
+import Login from './pages/Login'
+import RequireAuth from './utils/auth'
+import Rent from './pages/Rent'
+import RentAdd from './page/Rent/Add'
+import RentSearch from './page/Rent/Search'
 
 function App(props) {
   return (
@@ -48,10 +51,15 @@ function App(props) {
         <Route path="/houseDetail/:id" element={<HouseDetail />}></Route>
         {/* 登录界面 */}
         <Route path="/login" element={<Login />}></Route>
+        {/* 需要登录才能访问的页面 */}
+        <Route path="/rent" element={<Rent />}>
+          <Route path="add" element={<RentAdd />}></Route>
+          <Route path="search" element={<RentSearch />}></Route>
+        </Route>
       </Routes>
       {/* <Link to="/home">首页</Link>' '<Link to="/citylist">城市选择</Link>' '<Link to="/test">测试组件</Link> */}
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
