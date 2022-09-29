@@ -23,8 +23,8 @@ import HouseDetail from './pages/HouseDetail'
 import Login from './pages/Login'
 import RequireAuth from './utils/auth'
 import Rent from './pages/Rent'
-import RentAdd from './page/Rent/Add'
-import RentSearch from './page/Rent/Search'
+import RentAdd from './pages/Rent/Add'
+import RentSearch from './pages/Rent/Search'
 
 function App(props) {
   return (
@@ -52,10 +52,30 @@ function App(props) {
         {/* 登录界面 */}
         <Route path="/login" element={<Login />}></Route>
         {/* 需要登录才能访问的页面 */}
-        <Route path="/rent" element={<Rent />}>
-          <Route path="add" element={<RentAdd />}></Route>
-          <Route path="search" element={<RentSearch />}></Route>
-        </Route>
+        <Route
+          path="/rent"
+          element={
+            <RequireAuth go="/rent">
+              <Rent />
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="/rent/add"
+          element={
+            <RequireAuth go="/rent/add">
+              <RentAdd />
+            </RequireAuth>
+          }
+        ></Route>
+        <Route
+          path="/rent/search"
+          element={
+            <RequireAuth go="/rent/search">
+              <RentSearch />
+            </RequireAuth>
+          }
+        ></Route>
       </Routes>
       {/* <Link to="/home">首页</Link>' '<Link to="/citylist">城市选择</Link>' '<Link to="/test">测试组件</Link> */}
     </Router>

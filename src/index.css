@@ -32,3 +32,9 @@ ul,li{
 .adm-nav-bar{
   background-color: #f6f5f6;
 }
+input:focus{
+  outline: none;
+}
+textarea:focus{
+  outline: none;
+}

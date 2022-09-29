@@ -1,66 +1,69 @@
-import { useState, useEffect } from "react";
-import styles from "./index.module.css";
-import PropTypes from "prop-types";
+import { useState, useEffect } from 'react'
+import styles from './index.module.css'
+import PropTypes from 'prop-types'
 
 // 该组件用于展示房屋配置中的图标和描述文字
 const HouseConfig = (props) => {
   const [icons, setIcons] = useState([
     {
-      name: "衣柜",
-      iconClass: "icon-test4",
+      name: '衣柜',
+      iconClass: 'icon-test4',
     },
     {
-      name: "洗衣机",
-      iconClass: "icon-test3",
+      name: '洗衣机',
+      iconClass: 'icon-test3',
     },
     {
-      name: "空调",
-      iconClass: "icon-test5",
+      name: '空调',
+      iconClass: 'icon-test5',
     },
     {
-      name: "天然气",
-      iconClass: "icon-test2",
+      name: '天然气',
+      iconClass: 'icon-test2',
     },
     {
-      name: "冰箱",
-      iconClass: "bingxiang",
+      name: '冰箱',
+      iconClass: 'bingxiang',
     },
     {
-      name: "电视",
-      iconClass: "icon-test",
+      name: '电视',
+      iconClass: 'icon-test',
     },
     {
-      name: "热水器",
-      iconClass: "linyu",
+      name: '热水器',
+      iconClass: 'linyu',
     },
     {
-      name: "沙发",
-      iconClass: "icon-test6",
+      name: '沙发',
+      iconClass: 'icon-test6',
     },
     {
-      name: "宽带",
-      iconClass: "icon-test1",
+      name: '宽带',
+      iconClass: 'icon-test1',
     },
     {
-      name: "暖气",
-      iconClass: "FLOOR_HEATING_SYSTEM",
+      name: '暖气',
+      iconClass: 'FLOOR_HEATING_SYSTEM',
     },
-  ]);
+  ])
 
   const selectIcon = () => {
-    var temp = [];
+    if (props.list.length === 0) {
+      return
+    }
+    var temp = []
     icons.forEach((item) => {
       if (props.list.indexOf(item.name) >= 0) {
-        temp.push(item);
+        temp.push(item)
       }
-    });
-    setIcons(temp);
-  };
+    })
+    setIcons(temp)
+  }
 
   useEffect(() => {
-    selectIcon();
+    selectIcon()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const renderIcons = () => {
     return icons.map((item) => {
@@ -69,19 +72,23 @@ const HouseConfig = (props) => {
           <span className={`iconfont icon-${item.iconClass}`}></span>
           <div>{item.name}</div>
         </div>
-      );
-    });
-  };
+      )
+    })
+  }
   return (
     <>
       <div className={styles.icons}>{renderIcons()}</div>
     </>
-  );
-};
+  )
+}
 
 // props校验
 HouseConfig.propTypes = {
-  list: PropTypes.any.isRequired,
-};
+  // list的具体内容应该像这样['宽带', '沙发']
+  list: PropTypes.array,
+}
+HouseConfig.defaultProps = {
+  list: [],
+}
 
-export default HouseConfig;
+export default HouseConfig
