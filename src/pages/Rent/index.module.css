@@ -1,0 +1,12 @@
+.rent :global(.adm-error-block){
+  position: absolute;
+  top:40%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.rent a{
+  Text-decoration:none;
+}
+.rent span{
+  font-size: 15px;
+}

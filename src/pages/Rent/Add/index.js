@@ -1,9 +1,10 @@
 import MyNavBar from '../../../component/navbar'
 import styles from './index.module.css'
 import WithRightArrow from '../../../component/WithRightArrow'
-import { useState } from 'react'
-import { Input, ImageUploader, Button } from 'antd-mobile'
+import { useState, useEffect } from 'react'
+import { Input, ImageUploader, Button, Picker } from 'antd-mobile'
 import HouseConfig from '../../../component/houseConfig'
+import { useLocation, useNavigate } from 'react-router-dom'
 const RentAdd = () => {
   const [money, setMoney] = useState('')
   const [area, setArea] = useState('')
@@ -11,6 +12,30 @@ const RentAdd = () => {
   const [desc, setDesc] = useState('')
   // 上传图片
   const [img, setImg] = useState([])
+
+  // 小区名称
+  const [communityName, setCommunityName] = useState({})
+  const navigate = useNavigate()
+  // 设置小区名称
+  const { state } = useLocation()
+  useEffect(() => {
+    if (state !== null && state.name !== undefined) {
+      setCommunityName({
+        name: state.name,
+        id: state.id,
+      })
+    }
+  }, [])
+
+  // 弹出列表的列表项
+  const [pickerList, setPickerList] = useState([
+    [
+      { label: '11', value: '1' },
+      { label: '22', value: '2' },
+    ],
+  ])
+  const [visible, setVisible] = useState(false)
+  const [value, setValue] = useState('')
 
   const uploadImg = (val) => {
     console.log(val)
@@ -20,12 +45,33 @@ const RentAdd = () => {
   }
   return (
     <div className={styles.divLineBox}>
+      <div>
+        <Picker
+          columns={pickerList}
+          visible={visible}
+          onClose={() => {
+            setVisible(false)
+          }}
+          value={value}
+          onConfirm={(v) => {
+            setValue(v)
+          }}
+        />
+      </div>
       <MyNavBar>发布房源</MyNavBar>
       <div className={styles.title}>房源信息</div>
-      <WithRightArrow title="小区名称" rightArrow={true} rightText="上海滩公园"></WithRightArrow>
+      <WithRightArrow title="小区名称" onRightClick={() => navigate('/rent/search')} rightArrow={true} rightText={communityName === {} || communityName.name === undefined ? '请选择小区' : communityName.name}></WithRightArrow>
       <WithRightArrow title="租金" placeholder="请输入租金/月" input={(val) => setMoney(val)} rightText="￥/月"></WithRightArrow>
       <WithRightArrow title="建筑面积" placeholder="请输入建筑面积" input={(val) => setArea(val)} rightText="m²"></WithRightArrow>
-      <WithRightArrow title="户型" rightArrow rightText="请选择"></WithRightArrow>
+      <WithRightArrow
+        onRightClick={() => {
+          setVisible(true)
+        }}
+        title="户型"
+        rightArrow
+        rightText="请选择"
+      ></WithRightArrow>
+
       <WithRightArrow title="所在楼层" rightArrow rightText="请选择"></WithRightArrow>
       <WithRightArrow title="朝向" rightArrow rightText="请选择"></WithRightArrow>
       <WithRightArrow title="房屋标题" />

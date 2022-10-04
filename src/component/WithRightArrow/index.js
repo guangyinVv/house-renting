@@ -8,7 +8,9 @@ const WithRightArrow = (props) => {
   const [value, setValue] = useState('')
   return (
     <div className={`${styles.comWithRightArrow} ${styles.clearFix}`} onClick={onClick}>
-      <div className={styles.title}>{title}</div>
+      <div className={styles.title} style={input === undefined ? {} : { transform: 'translate(0px,50%)' }}>
+        {title}
+      </div>
       <div className={styles.input}>
         {input === undefined ? null : (
           <Input
@@ -22,7 +24,11 @@ const WithRightArrow = (props) => {
         )}
       </div>
       <div className={`${styles.rightPart} ${styles.clearFix}`} onClick={onRightClick}>
-        {rightText === undefined ? null : <div className={styles.text}>{rightText}</div>}
+        {rightText === undefined ? null : (
+          <div style={input === undefined ? {} : { transform: 'translate(0px,50%)' }} className={styles.text}>
+            {rightText}
+          </div>
+        )}
         {rightArrow ? <RightOutline /> : null}
       </div>
     </div>
