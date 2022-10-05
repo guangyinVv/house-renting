@@ -39,3 +39,17 @@
   font-weight: 550;
   padding:10px 20px;
 }
+.alert{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index:2;
+}
+.mask{
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(125, 128, 125, 0.6);
+  height: 100%;
+  width: 100%;
+}
