@@ -151,7 +151,19 @@ const RentAdd = () => {
         roomType: roomtype[0],
         size: area,
         floor: floor[0],
-        commmunity: communityName.id,
+        community: communityName.id,
+        houseImg: houseImg,
+      })
+      console.log({
+        title: title,
+        description: desc,
+        oriented: position[0],
+        supporting: houseConfigValue,
+        price: money,
+        roomType: roomtype[0],
+        size: area,
+        floor: floor[0],
+        community: communityName.id,
         houseImg: houseImg,
       })
       if (res.status === 200) {
