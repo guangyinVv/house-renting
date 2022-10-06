@@ -76,8 +76,6 @@ const RentAdd = () => {
     ],
   ])
 
-  const [value, setValue] = useState('')
-
   const uploadImg = (val) => {
     const url = URL.createObjectURL(val)
     let file = val
