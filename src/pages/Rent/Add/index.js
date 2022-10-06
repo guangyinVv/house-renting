@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { Input, ImageUploader, Button } from 'antd-mobile'
 import HouseConfig from '../../../component/houseConfig'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { PickerView } from 'antd-mobile'
+import { PickerView, Toast } from 'antd-mobile'
 import { axios } from '../../../utils/useAxios.js'
 const RentAdd = () => {
   // 租金
@@ -80,9 +80,12 @@ const RentAdd = () => {
 
   const uploadImg = (val) => {
     const url = URL.createObjectURL(val)
-    let temp = val
-    temp.url = url
-    console.log(temp)
+    let file = val
+    file.url = url
+    const temp = [...imgs]
+    temp.push(file)
+    // console.log(temp)
+    setImgs(temp)
     return {
       url: url,
     }
@@ -119,20 +122,56 @@ const RentAdd = () => {
   // 用于显示被选中的信息
   let [currentSelect, setCurrentSelect] = useState('')
 
-  // 用于存传输的图片
+  // 用于存传输的图片文件
   const [imgs, setImgs] = useState([])
 
-  // const addHouse = () => {
-  //   if (imgs.length > 0) {
-  //     const form = new FormData()
-  //     imgs.forEach((item) => {
-  //       form.append('file', item)
-  //       console.log(form)
-  //     })
-  //     const { data } = axios.post('/houses/image', imgs, { headers: { 'Content-Type': 'multipart/form-data' } })
-  //     console.log(data)
-  //   }
-  // }
+  const addHouse = async () => {
+    // console.log(img)
+    // console.log(imgs)
+    const tempImgs = []
+    img.forEach((item) => {
+      for (var i = 0; i < imgs.length; i++) {
+        if (item.url === imgs[i].url) {
+          tempImgs.push(imgs[i])
+          break
+        }
+      }
+    })
+    setImgs(tempImgs)
+    if (tempImgs.length > 0) {
+      const form = new FormData()
+      tempImgs.forEach((item) => form.append('file', item))
+      const { data } = await axios.post('/houses/image', form, { headers: { 'Content-Type': 'multipart/form-data' } })
+      console.log(data)
+      const houseImg = data.body.join('|')
+      const { data: res } = await axios.post('/user/houses', {
+        title: title,
+        description: desc,
+        oriented: position[0],
+        supporting: houseConfigValue,
+        price: money,
+        roomType: roomtype[0],
+        size: area,
+        floor: floor[0],
+        commmunity: communityName.id,
+        houseImg: houseImg,
+      })
+      if (res.status === 200) {
+        Toast.show({
+          icon: 'success',
+          content: '发布成功',
+          duration: 1200,
+          maskClickable: false,
+          afterClose: () => {
+            navigate('/rent')
+          },
+        })
+      } else {
+        Toast.show({ icon: 'fail', content: '服务器偷懒了，请稍后再试~', duration: 1200 })
+      }
+    }
+  }
+
   return (
     <div className={styles.divLineBox}>
       <MyNavBar>发布房源</MyNavBar>
@@ -175,7 +214,7 @@ const RentAdd = () => {
       <Input placeholder="请输入标题(例如:整租小区名2室5000元)" value={title} onChange={(val) => setTitle(val)}></Input>
       <WithRightArrow title="房屋图像" />
       <div className={styles.uploadImg}>
-        <ImageUploader maxCount={6} multiple value={img} onChange={setImg} upload={uploadImg} />
+        <ImageUploader maxCount={6} value={img} onChange={setImg} upload={uploadImg} />
       </div>
       <WithRightArrow title="房屋配置" />
       <HouseConfig
@@ -198,7 +237,9 @@ const RentAdd = () => {
       <header className={styles.null}></header>
       <div className={styles.bottom}>
         <Button>取消</Button>
-        <Button color="success">提交</Button>
+        <Button onClick={addHouse} color="success">
+          提交
+        </Button>
       </div>
       {/* <div style={visible ? {} : { display: 'none' }}> */}
       {!visible ? null : (
