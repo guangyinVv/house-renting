@@ -10,3 +10,10 @@
 .rent span{
   font-size: 15px;
 }
+.rent :global(.adm-nav-bar) span{
+  font-size: 24px;
+}
+.rentAdd{
+  color: blue;
+  font-size: 15px;
+}

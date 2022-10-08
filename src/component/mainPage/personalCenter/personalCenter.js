@@ -96,7 +96,7 @@ const PersonalCenter = () => {
       </div>
       <Grid className={styles.iconContent} columns={3} gap={8}>
         <Grid.Item>
-          <div className={styles.iconBox}>
+          <div className={styles.iconBox} onClick={() => navigate('/favorite')}>
             <StarOutline fontSize={30} />
             <div className={styles.iconName}>我的收藏</div>
           </div>

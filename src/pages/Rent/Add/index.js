@@ -7,6 +7,7 @@ import HouseConfig from '../../../component/houseConfig'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PickerView, Toast } from 'antd-mobile'
 import { axios } from '../../../utils/useAxios.js'
+import { Spring, animated } from 'react-spring'
 const RentAdd = () => {
   // 租金
   const [money, setMoney] = useState('')
@@ -28,7 +29,7 @@ const RentAdd = () => {
         setRoomtypeText(item.label)
       }
     })
-  }, [roomtype])
+  }, [roomtype]) // eslint-disable-line react-hooks/exhaustive-deps
   // 所在楼层
   const [floor, setFloor] = useState([])
   const [floorText, setFloorText] = useState('请选择')
@@ -38,7 +39,7 @@ const RentAdd = () => {
         setFloorText(item.label)
       }
     })
-  }, [floor])
+  }, [floor]) // eslint-disable-line react-hooks/exhaustive-deps
   // 朝向
   const [position, setPosition] = useState([])
   const [positionText, setPositionText] = useState('请选择')
@@ -48,7 +49,7 @@ const RentAdd = () => {
         setPositionText(item.label)
       }
     })
-  }, [position])
+  }, [position]) // eslint-disable-line react-hooks/exhaustive-deps
   // 房屋配置
   const [houseConfigValue, setHouseConfigValue] = useState('')
 
@@ -64,7 +65,7 @@ const RentAdd = () => {
         id: state.id,
       })
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [visible, setVisible] = useState(false)
 
@@ -182,11 +183,38 @@ const RentAdd = () => {
     }
   }
 
+  const renderMask = () => {
+    return (
+      <Spring
+        from={{ opacity: 0.1 }}
+        to={{ opacity: visible ? 1 : 0 }}
+        onStart={() => {
+          var mask = document.querySelector(`.${styles.mask}`)
+          mask.style.display = 'block'
+        }}
+        onRest={() => {
+          var mask = document.querySelector(`.${styles.mask}`)
+          mask.style.display = !visible ? 'none' : 'block'
+        }}
+      >
+        {(props) => (
+          <animated.div
+            className={styles.mask}
+            style={props}
+            onClick={() => {
+              setVisible(false)
+            }}
+          ></animated.div>
+        )}
+      </Spring>
+    )
+  }
+
   return (
     <div className={styles.divLineBox}>
       <MyNavBar>发布房源</MyNavBar>
       <div className={styles.title}>房源信息</div>
-      <WithRightArrow title="小区名称" onRightClick={() => navigate('/rent/search')} rightArrow={true} rightText={communityName === {} || communityName.name === undefined ? '请选择小区' : communityName.name}></WithRightArrow>
+      <WithRightArrow title="小区名称" onRightClick={() => navigate('/rent/search', { replace: true })} rightArrow={true} rightText={communityName === {} || communityName.name === undefined ? '请选择小区' : communityName.name}></WithRightArrow>
       <WithRightArrow title="租金" placeholder="请输入租金/月" input={(val) => setMoney(val)} rightText="￥/月"></WithRightArrow>
       <WithRightArrow title="建筑面积" placeholder="请输入建筑面积" input={(val) => setArea(val)} rightText="m²"></WithRightArrow>
       <WithRightArrow
@@ -272,15 +300,11 @@ const RentAdd = () => {
               }}
             />
           </div>
-          {/* 遮罩层 */}
-          <div
-            className={styles.mask}
-            onClick={() => {
-              setVisible(false)
-            }}
-          ></div>
         </>
       )}
+      {/* 遮罩层 */}
+      {renderMask()}
+      <div>123</div>
     </div>
     // </div>
   )

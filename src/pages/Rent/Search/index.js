@@ -26,8 +26,14 @@ const RentSearch = () => {
   return (
     <div className={styles.search}>
       <SearchBar
+        onFocus={async () => {
+          const { data } = await axios.get('/area/community', {
+            params: { name: '', id: getCity.value },
+          })
+          setTipList(data.body)
+        }}
         onCancel={() => {
-          navigate(-1)
+          navigate('/rent/add', { replace: true })
         }}
         onChange={(val) => {
           clearTimeout(timer)

@@ -11,7 +11,7 @@ import { useContext } from 'react'
 import HouseConfig from '../../component/houseConfig'
 import { isAuth } from '../../utils/auth'
 
-function HouseDetail(props) {
+function HouseDetail() {
   const back = () => {
     window.history.back()
   }
@@ -91,7 +91,7 @@ function HouseDetail(props) {
 
   useEffect(() => {
     checkFavorite()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [houseListData, setHouseListData] = useState([])
   const userContext = useContext(UserContext)
@@ -207,7 +207,7 @@ function HouseDetail(props) {
     <>
       <div className={styles.NavBar}>
         <NavBar back="返回" onBack={back} right={rightIcon}>
-          {houseDetailData.community}
+          <div>{houseDetailData.community}</div>
         </NavBar>
       </div>
       {houseDetailData.houseImg.length > 0 ? (

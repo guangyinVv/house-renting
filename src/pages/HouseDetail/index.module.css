@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   z-index: 10;
-  color: white;
+  /* color: white; */
 }
 .NavBar :global(.adm-nav-bar) {
   background-color: transparent;

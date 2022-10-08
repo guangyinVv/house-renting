@@ -1,5 +1,5 @@
 .divLineBox>div{
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid rgba(128, 128, 128,0.1);
 }
 .title{
   color:rgb(0,181,120);
