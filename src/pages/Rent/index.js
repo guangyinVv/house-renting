@@ -14,7 +14,10 @@ const Rent = () => {
   const getHouses = async () => {
     const { data } = await axios.get('/user/houses', { authorization: getToken() })
     setPublicHouses(data.body)
+    setState(true)
   }
+  // 判断是否加载完毕
+  const [state, setState] = useState(false)
   useEffect(() => {
     getHouses()
   }, [])
@@ -35,11 +38,11 @@ const Rent = () => {
       >
         我的出租
       </MyNavBar>
-      {publicHouses.length > 0 ? (
+      {publicHouses.length > 0 || !state ? (
         <HouseList
           HouseListData={publicHouses}
           searchHouseList={() => {
-            return false
+            return !state
           }}
         />
       ) : (

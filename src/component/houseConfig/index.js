@@ -64,11 +64,6 @@ const HouseConfig = (props) => {
     setIcons(temp)
   }
 
-  // icons一变化就会触发formatValue函数
-  useEffect(() => {
-    formatValue()
-  }, [icons])
-
   // 获取图标的value，即在每个name中间加|
   const formatValue = () => {
     const array = []
@@ -80,6 +75,11 @@ const HouseConfig = (props) => {
     const value = array.join('|')
     props.onChange(value)
   }
+
+  // icons一变化就会触发formatValue函数
+  useEffect(() => {
+    formatValue()
+  }, [icons])
 
   const selectIcon = () => {
     if (props.list.length === 0) {

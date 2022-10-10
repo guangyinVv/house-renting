@@ -12,9 +12,20 @@ axios.defaults.baseURL = baseURL
 React.Component.prototype.$http = axios
 React.Component.prototype.$baseUrl = baseURL
 
+window.onerror = function (message, source, lineno, colno, error) {
+  console.log(11111);
+  console.log(message, source, lineno, colno, error);
+  return true
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
-  <UserContext.Provider value={{ axios: axios, baseUrl: baseURL }}>
-    <App />
+root.render (
+  <UserContext.Provider value={
+    {
+      axios: axios,
+      baseUrl: baseURL
+    }
+  }>
+    <App/>
   </UserContext.Provider>
 )

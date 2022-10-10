@@ -212,7 +212,7 @@ const RentAdd = () => {
 
   return (
     <div className={styles.divLineBox}>
-      <MyNavBar>发布房源</MyNavBar>
+      <MyNavBar fixed>发布房源</MyNavBar>
       <div className={styles.title}>房源信息</div>
       <WithRightArrow title="小区名称" onRightClick={() => navigate('/rent/search', { replace: true })} rightArrow={true} rightText={communityName === {} || communityName.name === undefined ? '请选择小区' : communityName.name}></WithRightArrow>
       <WithRightArrow title="租金" placeholder="请输入租金/月" input={(val) => setMoney(val)} rightText="￥/月"></WithRightArrow>
